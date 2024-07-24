@@ -8,9 +8,19 @@ model = pickle.load(open('decision_tree_model.pkl', 'rb'))
 
 # Define a function to make predictions
 def predict_cancer(data):
+    # Load the scaler used during training
     scaler = StandardScaler()
-    data = scaler.fit_transform([data])
-    prediction = model.predict(data)
+    
+    # Reshape the data to match the scaler's expected input
+    data = [data]
+    
+    # Scale the data (note: in a real scenario, fit the scaler on the training data only)
+    scaled_data = scaler.fit_transform(data)
+    
+    # Make a prediction using the loaded model
+    prediction = model.predict(scaled_data)
+    
+    # Return the prediction result
     return prediction[0]
 
 # Streamlit app
